@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Ian Gitonga(iangitonga11@gmail.com)">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+  <title>NanoChat</title>
+
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <link rel="stylesheet" type="text/css" href="bootstrap.css">
+  <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar sticky-top bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand">NanoChat</a>
+      <form class="d-flex text-center me-5">
+        <div class="me-4">
+          <label class="text-light">Model</label>
+          <select class="form-select" id="model-selector">
+            <option value="zephyr">Zephyr 1.6B</option>
+            <option value="tinyllama">Tinyllama</option>
+          </select>
+        </div>
+
+        <div class="">
+          <label class="text-light">Format</label>
+          <select class="form-select" id="model-format-selector">
+            <option value="fp16">Float-16</option>
+            <option value="q8">8-bit</option>
+            <option value="q4">4-bit</option>
+          </select>
+        </div>
+      </form>
+    </div>
+  </nav>
+
+  <main id="main" style="padding-bottom: 100px;">
+    <section class="msger-chat" id="chat-display">
+    </section>
+  </main>
+
+  <section>
+  <!-- Download Modal -->
+  <div class="modal " id="model-download-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Downloading <span id="model-download-modal-title"></span>...</h1>
+        </div>
+        <div class="modal-body text-end">
+            <span> <span id="download-modal-accumsize">0</span>MB / <span id="download-modal-totsize"></span>MB </span>
+            <div class="progress" role="progressbar" aria-label="Example 20px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
+            <div class="progress-bar" id="download-progbar" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="model-download-cancel" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+<footer>
+  <nav class="navbar fixed-bottom bg-body-tertiary bg-secondary-subtle">
+    <div class="container-fluid">
+      <form class="d-flex flex-fill mx-2 mb-2" id="chat-input-form" role="search">
+        <input class="form-control  me-2" id="chat-input" type="search" placeholder="Enter your prompt...">
+        <button class="btn btn-success" id="chat-submit-btn" type="submit">Submit</button>
+      </form>
+    </div>
+  </nav>
+</footer>
+
+<!-- You can also require other files to run in this process -->
+<script src="./renderer.js"></script>
+
+</body>
+
+</html>

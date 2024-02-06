@@ -20,7 +20,7 @@ Once you have the required dependecies run the following commands to install and
 
 ```
 git clone https://github.com/iangitonga/nanochat.ai.git
-cd nanochat/
+cd nanochat.ai/
 npm install
 npm start
 ```

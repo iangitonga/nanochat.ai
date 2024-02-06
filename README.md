@@ -1,5 +1,5 @@
 # NanoChat.ai
-![alt text](./nanochat.jpeg)
+![alt text](./nanochat.png)
 
 **NanoChat.ai** is a cross-platform GUI application built on Electron that allows you to chat with
 small but powerful chat language models. The inference is implemented in pure C++

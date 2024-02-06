@@ -6,10 +6,15 @@
     --right-msg-bg: #579ffb;
   }
   
-  body {
-    height: 100vh;
-    font-family: Helvetica, sans-serif;
-  }
+@font-face {
+  font-family: Roboto;
+  src: url("../assets/font/Roboto/Roboto-Regular.ttf");
+}
+
+body {
+  height: 100vh;
+  font-family: Roboto!important;
+}
   
 .msger {
   display: flex;

@@ -375,6 +375,17 @@ function appendMessage(name, side, text) {
     
 }
 
+document.getElementById("dark-mode-switch").addEventListener("change", (event) => {
+    event.preventDefault();
+
+    const body = document.getElementById("body");
+    if (body.getAttribute("data-bs-theme") === "light") {
+        body.setAttribute("data-bs-theme", "dark");
+    } else {
+        body.setAttribute("data-bs-theme", "light");
+    }
+});
+
 
 function gten_assert(condition, message) {
     if (!condition) {

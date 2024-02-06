@@ -14,12 +14,11 @@
   <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
-<body>
-
+<body id="body" data-bs-theme="light">
   <nav class="navbar sticky-top bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
       <a class="navbar-brand">NanoChat</a>
-      <form class="d-flex text-center me-5">
+      <form class="d-flex justify-content-center align-items-center text-center me-5">
         <div class="me-4">
           <label class="text-light">Model</label>
           <select class="form-select" id="model-selector">
@@ -28,7 +27,7 @@
           </select>
         </div>
 
-        <div class="">
+        <div class="me-4">
           <label class="text-light">Format</label>
           <select class="form-select" id="model-format-selector">
             <option value="fp16">Float-16</option>
@@ -36,12 +35,20 @@
             <option value="q4">4-bit</option>
           </select>
         </div>
+
+        <div class="">
+          <label class="form-check-label text-light" for="dark-mode-switch">Dark Mode</label>
+          <div class="form-switch mt-2">
+            <input class="form-check-input" type="checkbox" role="switch" id="dark-mode-switch" style="transform: scale(1.5);">
+          </div>
+        </div>
+
       </form>
     </div>
   </nav>
 
-  <main id="main" style="padding-bottom: 100px;">
-    <section class="msger-chat" id="chat-display">
+  <main id="main" class="bg-body" style="padding-bottom: 100px;">
+    <section class="msger-chat p-3" id="chat-display">
     </section>
   </main>
 

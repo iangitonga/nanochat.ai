@@ -203,7 +203,7 @@ const download_model = (model_name, model_format, callback) => {
 
 const _load_model = (model_name, model_format, model_path, callback) => {
     const tok_path = tokenizer_paths[model_name];
-    const n_ctx = 256;
+    const n_ctx = 800;
 
     const data = {
         "model_name": model_name,

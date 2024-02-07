@@ -22,7 +22,7 @@
         <div class="me-4">
           <label class="text-light">Model</label>
           <select class="form-select" id="model-selector">
-            <option value="zephyr">Zephyr 1.6B</option>
+            <option value="zephyr">Zephyr</option>
             <option value="tinyllama">Tinyllama</option>
           </select>
         </div>
@@ -30,9 +30,9 @@
         <div class="me-4">
           <label class="text-light">Format</label>
           <select class="form-select" id="model-format-selector">
-            <option value="fp16">Float-16</option>
-            <option value="q8">8-bit</option>
-            <option value="q4">4-bit</option>
+            <option id="fp16-option" value="fp16">FP-16 (3.3GB)</option>
+            <option id="q8-option" value="q8">8-bit (1.8GB)</option>
+            <option id="q4-option" value="q4">4-bit (0.9GB)</option>
           </select>
         </div>
 
@@ -87,7 +87,6 @@
 
 <!-- You can also require other files to run in this process -->
 <script src="./renderer.js"></script>
-
 </body>
 
 </html>

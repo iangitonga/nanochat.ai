@@ -22,6 +22,7 @@ const chat_display = document.getElementById("chat-display");
 const model_selector = document.getElementById("model-selector");
 const model_format_selector = document.getElementById("model-format-selector");
 
+
 const model_urls = {
     "zephyr": {
         "fp16": "https://huggingface.co/iangitonga/gten/resolve/main/zephyr1_6b.fp16.gten",
@@ -392,3 +393,27 @@ function gten_assert(condition, message) {
         throw new Error(message || "Assertion failed");
     }
 }
+
+// const model_selector = document.getElementById("model-selector");
+// const model_format_selector = document.getElementById("model-format-selector");
+
+const model_size = {
+    "zephyr": {
+        "fp16": "FP-16 (3.3GB)",
+        "q8"  : "8-bit (1.8GB)",
+        "q4"  : "4-bit (0.9GB)"
+    },
+    "tinyllama": {
+        "fp16": "FP-16 (2.2GB)",
+        "q8"  : "8-bit (1.2GB)",
+        "q4"  : "4-bit (0.6GB)"
+    }
+}
+
+model_selector.addEventListener("change", (event) => {
+    const selected_model = event.target.value;
+
+    document.getElementById(`fp16-option`).innerText = model_size[selected_model]["fp16"];
+    document.getElementById(`q8-option`).innerText = model_size[selected_model]["q8"];
+    document.getElementById(`q4-option`).innerText = model_size[selected_model]["q4"];
+});

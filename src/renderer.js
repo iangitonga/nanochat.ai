@@ -9,8 +9,8 @@ const inference_worker = new Worker("./inference_worker.js");
 const load_worker = new Worker("./load_worker.js");
 
 const global_state = {
-    inference_pkg_id: null, // pointer to inference package.
-    processed_prompts: 0, // helps with id for msg elems.
+    inference_pkg_id: null,
+    processed_prompts: 0,
     model_download_cancelled: false,
     loaded_models: []
 };

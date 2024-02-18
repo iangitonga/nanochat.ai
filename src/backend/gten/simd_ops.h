@@ -8,14 +8,10 @@
 #include "gten_types.h"
 
 
-
-// TODO: Allow AVX without F16C for FP32 mode.
 #if defined(__AVX__)
-#define GTEN_SIMD_AVX 1
-
 #include <immintrin.h>
-
 #endif
+
 
 namespace gten {
 
@@ -24,7 +20,7 @@ namespace ops {
 // Number of floats the avx registers (256bit) can process.
 #define GTEN_SIMD_VEC_SIZE 8
 
-#ifdef GTEN_SIMD_AVX
+#if defined(__AVX__)
 
 // FUNDAMENTAL VECTOR DATA TYPES.
 typedef __m256 Vec_f32x8;
@@ -51,7 +47,6 @@ inline void vec_f32x8_store(Vec_f32x8 vec, float* dest_ptr) {
     _mm256_storeu_ps(dest_ptr, vec);
 }
 
-
 inline void vec_f32x8_store(Vec_f32x8 vec, Float16* dest_ptr) {
 #if defined(__F16C__)
     _mm_storeu_si128((__m128i_u *)dest_ptr, _mm256_cvtps_ph(vec, 0));
@@ -63,7 +58,6 @@ inline void vec_f32x8_store(Vec_f32x8 vec, Float16* dest_ptr) {
     }
 #endif
 }
-
 
 inline Vec_f32x8 vec_f32x8_add(Vec_f32x8 a, Vec_f32x8 b) {
     return _mm256_add_ps(a, b);

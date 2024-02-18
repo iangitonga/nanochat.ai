@@ -24,12 +24,17 @@ const model_format_selector = document.getElementById("model-format-selector");
 
 
 const model_urls = {
-    "zephyr": {
-        "fp16": "https://huggingface.co/iangitonga/gten/resolve/main/zephyr1_6b.fp16.gten",
-        "q8"  : "https://huggingface.co/iangitonga/gten/resolve/main/zephyr1_6b.q8.gten",
-        "q4"  : "https://huggingface.co/iangitonga/gten/resolve/main/zephyr1_6b.q4.gten"
+    minicpm: {
+        "fp16": "https://huggingface.co/iangitonga/gten/resolve/main/minicpm.fp16.gten",
+        "q8"  : "https://huggingface.co/iangitonga/gten/resolve/main/minicpm.q8.gten",
+        "q4"  : "https://huggingface.co/iangitonga/gten/resolve/main/minicpm.q4.gten"
     },
-    "tinyllama": {
+    zephyr: {
+        "fp16": "https://huggingface.co/iangitonga/gten/resolve/main/zephyr.fp16.gten",
+        "q8"  : "https://huggingface.co/iangitonga/gten/resolve/main/zephyr.q8.gten",
+        "q4"  : "https://huggingface.co/iangitonga/gten/resolve/main/zephyr.q4.gten"
+    },
+    tinyllama: {
         "fp16": "https://huggingface.co/iangitonga/gten/resolve/main/tinyllama.fp16.gten",
         "q8"  : "https://huggingface.co/iangitonga/gten/resolve/main/tinyllama.q8.gten",
         "q4"  : "https://huggingface.co/iangitonga/gten/resolve/main/tinyllama.q4.gten"
@@ -38,8 +43,9 @@ const model_urls = {
 
 
 const tokenizer_paths = {
-    zephyr: path.join(__dirname, "backend", 'zephyr_tok.bin'),
-    tinyllama: path.join(__dirname, "backend", 'tinyllama_tok.bin')
+    minicpm: path.join(__dirname, "..", "assets", "tokenizers", 'minicpm_tokenizer.bin'),
+    zephyr: path.join(__dirname, "..", "assets", "tokenizers", 'zephyr_tokenizer.bin'),
+    tinyllama: path.join(__dirname, "..", "assets", "tokenizers", 'tinyllama_tokenizer.bin')
 };
 
 const show_error_alert = (message) => {
@@ -160,12 +166,14 @@ const download_model = (model_name, model_format, callback) => {
                     // Ensures that no more I/O activity happens on this socket. Destroys the stream and closes the connection.
                     response.destroy();
                     const err = new Error(`failed to create: ${temp_dir_path}`);
+                    console.log("error: ", err);
                     hide_download_modal();
                 };
 
                 response.on('data', (chunk) => {
                     if (global_state.model_download_cancelled) {
                         reset_connection();
+                        const err = new Error(`failed to create: ${temp_dir_path}`);
                         callback(err);
                     } else {
                         cursize_bytes += chunk.length;
@@ -319,6 +327,7 @@ const perform_inference = (prompt_text) => {
     }
 }
 
+let last_was_linebreak = false;
 inference_worker.onmessage = (event) => {
     const current_bot_msg_id = `bot-msg-${global_state.processed_prompts}`;
     const current_bot_msg = document.getElementById(current_bot_msg_id);
@@ -326,13 +335,18 @@ inference_worker.onmessage = (event) => {
 
     let pred_word = event.data;
     if (pred_word != "<endoftext>") {
-        if (pred_word.includes("\n")) {
+        if (pred_word.includes("\n") && !last_was_linebreak) {
             pred_word = "<br/><br/>";
+            last_was_linebreak = true;
+        } else {
+            last_was_linebreak = false;
         }
         current_bot_msg.insertAdjacentHTML("beforeend", pred_word);
         // current_bot_msg.scrollIntoView(/*alignToTop=*/false);
         window.scrollTo(0, document.body.scrollHeight);
+
     } else {
+        last_was_linebreak = false;
         global_state.processed_prompts = global_state.processed_prompts + 1;
         send_button.removeAttribute("disabled");
     }
@@ -398,12 +412,17 @@ function gten_assert(condition, message) {
 // const model_format_selector = document.getElementById("model-format-selector");
 
 const model_size = {
-    "zephyr": {
+    minicpm: {
+        "fp16": "FP-16 (5.5GB)",
+        "q8"  : "8-bit (2.9GB)",
+        "q4"  : "4-bit (1.5GB)"
+    },
+    zephyr: {
         "fp16": "FP-16 (3.3GB)",
         "q8"  : "8-bit (1.8GB)",
         "q4"  : "4-bit (0.9GB)"
     },
-    "tinyllama": {
+    tinyllama: {
         "fp16": "FP-16 (2.2GB)",
         "q8"  : "8-bit (1.2GB)",
         "q4"  : "4-bit (0.6GB)"

@@ -208,13 +208,9 @@ napi_value api_perform_inference(napi_env env, napi_callback_info info) {
     };
 
     // INFERENCE
-    const std::string model_name = ((InferencePackage<void, void>*)inference_pkg_ptr)->model_name;
+    const std::string model_name = reinterpret_cast<InferencePackage*>(inference_pkg_ptr)->model_name;
 
-    if (model_name == "tinyllama") {
-        perform_inference<TinyLlama, TinyLlamaTokenizer> (inference_pkg_ptr, prompt, inference_cb);
-    } else {
-         perform_inference<Zephyr1_6b, ZephyrTokenizer> (inference_pkg_ptr, prompt, inference_cb);
-    }
+    perform_inference(inference_pkg_ptr, prompt, inference_cb);
 
     return nullptr;
 }

@@ -8,7 +8,6 @@
   <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
   <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
   <title>NanoChat</title>
-
   <link rel="stylesheet" type="text/css" href="main.css">
   <link rel="stylesheet" type="text/css" href="bootstrap.css">
   <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -22,6 +21,7 @@
         <div class="me-4">
           <label class="text-light">Model</label>
           <select class="form-select" id="model-selector">
+            <option value="minicpm">MiniCPM</option>
             <option value="zephyr">Zephyr</option>
             <option value="tinyllama">Tinyllama</option>
           </select>
@@ -30,9 +30,9 @@
         <div class="me-4">
           <label class="text-light">Format</label>
           <select class="form-select" id="model-format-selector">
-            <option id="fp16-option" value="fp16">FP-16 (3.3GB)</option>
-            <option id="q8-option" value="q8">8-bit (1.8GB)</option>
-            <option id="q4-option" value="q4">4-bit (0.9GB)</option>
+            <option id="fp16-option" value="fp16">FP-16 (5.5GB)</option>
+            <option id="q8-option" value="q8">8-bit (2.9GB)</option>
+            <option id="q4-option" value="q4">4-bit (1.5GB)</option>
           </select>
         </div>
 
